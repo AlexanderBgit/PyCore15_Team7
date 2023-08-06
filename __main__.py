@@ -4,9 +4,10 @@ from AddressBook import *
 
 
 if __name__ == "__main__":
-    print('Hello')
+    print('Hello. I am your contact-assistant.\nWhat can I help your?')
     bot = Bot()
 
+# bot.book.load("auto_save")
 #автоматичне завантаження
 
 COMMANDS = {
@@ -24,6 +25,14 @@ COMMANDS = {
 }
 
 def parser(text: str):
+    for cmd, kwds in COMMANDS.items():
+        for kwd in kwds:
+            if text.lower().startswith(kwd):
+                data = text[len(kwd):].strip().split()
+                if cmd in [change_command, edit_name_command]:
+                    if len(data) < 3:
+                        data.append(None)
+                return cmd, data
     return unknown_command, []
 
 
