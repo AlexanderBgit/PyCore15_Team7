@@ -5,12 +5,14 @@ from rich import box
 from datetime import datetime, date
 import re
 import pickle
+from classes import *
 
 # Клас AddressBook, який наслідується від UserDict, 
 # та ми потім додамо логіку пошуку за записами до цього класу.
 class AddressBook(UserDict):
-    def add_record(self,):
-        pass
+    def add_record(self, record: Record):
+        self.data[str(record.name)] = record
+        return f"Contact {record} add success"
 
 
     def delete_record(self,):
