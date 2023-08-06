@@ -4,34 +4,6 @@ from AddressBook import *
 from exeptions import *
 
 
-class Record:
-    def __init__(self, name, phone, birthday, email) -> None:
-        pass
-
-
-    def change_birthday(self, new_birthday):
-        pass
-
-
-    def add_phone(self, phone):
-        pass
-
-
-    def change_phone(self, old_phone, new_phone):
-        pass
-
-
-    def change_name(self, new_name):
-        pass
-
-
-    def days_to_birthday(self):
-        pass
-
-    def __str__(self) -> str:
-        return
-
-
 class Field:
     def __init__(self, value: str) -> None:
         self.value = value
@@ -42,7 +14,10 @@ class Field:
 
 class Name(Field):
     def __init__(self, first_name, last_name=None) -> None:
-        return
+        if last_name:
+            self.value = f"{first_name} {last_name}"
+        else:
+            self.value = first_name
     
 
 class Phone(Field):
@@ -113,4 +88,33 @@ class Note(Field):
         self.title = title    
 
 
-    
+class Record:
+    def __init__(self, name: Name, phone: Phone = None, Birthday: Birthday = None) -> None:
+        self.name = name
+        self.phones = []
+        if phone:
+            self.phones.append(phone)
+        self.birthday = Birthday
+
+
+    def change_birthday(self, new_birthday):
+        pass
+
+
+    def add_phone(self, phone):
+        pass
+
+
+    def change_phone(self, old_phone, new_phone):
+        pass
+
+
+    def change_name(self, new_name):
+        pass
+
+
+    def days_to_birthday(self):
+        pass
+
+    def __str__(self) -> str:
+        return    
