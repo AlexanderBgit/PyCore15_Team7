@@ -19,7 +19,8 @@ COMMANDS = {
     hello_command:("hello", "1"),
     edit_name_command: ("edit", "7"),
     show_address_book: ("page", "**"),
-    change_birthday_command: ("bday", "6")   
+    change_birthday_command: ("bday", "6"),
+    contacts_in_period: ("period", "bdays")
 }
 
 def parser(text: str):

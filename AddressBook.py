@@ -2,7 +2,7 @@ from collections import UserDict
 from rich.console import Console
 from rich.table import Table
 from rich import box
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import re
 import pickle
 
@@ -36,8 +36,22 @@ class AddressBook(UserDict):
         pass
 
 
-    def congratulate(self):
-        pass
+    def congratulate(self, period: int):
+        current_date = datetime.now().date()
+
+        results = []
+        for record in self.data.values():
+            if record.birthday:
+                next_birthday = datetime(current_date.year, record.birthday.month, record.birthday.day).date()
+
+                if next_birthday < current_date:
+                    next_birthday = datetime(current_date.year + 1, record.birthday.month, record.birthday.day).date()
+
+                days_to_bd = (next_birthday - current_date).days
+                if 0 <= days_to_bd <= period:
+                    results.append(f"{record.name} {next_birthday.strftime('%d.%m')}")
+
+        return results
 
 
     # метод iterator, який повертає генератор за записами. Пагінація    
