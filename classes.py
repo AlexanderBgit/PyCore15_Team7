@@ -1,11 +1,11 @@
 from datetime import datetime, date
 import re
-from abc import ABC, abstractmethod
 from AddressBook import *
+from exeptions import *
 
 
 class Record:
-    def __init__(self, name, phone, Birthday, email) -> None:
+    def __init__(self, name, phone, birthday, email) -> None:
         pass
 
 
@@ -31,10 +31,13 @@ class Record:
     def __str__(self) -> str:
         return
 
-class Field(ABC):
-    def __init__(self, value) -> None:
-        self.value = value
 
+class Field:
+    def __init__(self, value: str) -> None:
+        self.value = value
+    
+    def __str__(self) -> str:
+        return self.value
 
 
 class Name(Field):
@@ -43,18 +46,61 @@ class Name(Field):
     
 
 class Phone(Field):
-    def __init__(self, value) -> None:
-        return
+    @property
+    def value(self):
+        return self.__value
+    
+    @value.setter
+    def value(self, value:str):
+        if self.is_correct_phone(value):
+            self.__value = value
+        else:
+            raise PhoneError(value)
+        
+    def is_correct_phone(self, value) -> bool:
+        pattern = re.compile(r"\+\d{11,13}")
+        result = re.fullmatch(pattern, value)
+        
+        return True if result else False
 
 
 class Birthday(Field):
-    def __init__(self, value) -> None:
-        self.value = value
+    @property
+    def value(self):
+        return self.__value
+    
+    @value.setter
+    def value(self, value:str):
+        if re.fullmatch(r"\d{1,2}-\d{1,2}-\d{4}", value):
+            self.__value = datetime.strptime(value, "%d-%m-%Y")
+        elif re.fullmatch(r"\d{1,2}\.\d{1,2}\.\d{4}", value):
+            self.__value = datetime.strptime(value, "%d.%m.%Y")
+        elif re.fullmatch(r"\d{1,2}/\d{1,2}/\d{4}", value):
+            self.__value = datetime.strptime(value, "%d/%m/%Y")
+        else:
+            raise BirthdayError(value)
+        
+    def __str__(self):
+        return self.__value.strftime("%d-%m-%Y") if not self.is_empty_date() else ""
 
 
 class Email(Field):
-    def __init__(self, value) -> None:
-        return
+    @property
+    def value(self):
+        return self.__value
+    
+    @value.setter
+    def value(self, value:str):
+        if self.is_correct_email(value):
+            self.__value = value.lower()
+        else:
+            raise EmailError(value)
+        
+    def is_correct_email(self, value) -> bool:
+        pattern = re.compile(r"([a-zA-Z]{1}[a-zA-Z0-9_.]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,})")
+        result = re.fullmatch(pattern, value)
+        
+        return True if result else False
     
 
 class Tag(Field):

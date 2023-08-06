@@ -57,12 +57,3 @@ class AddressBook(UserDict):
 
 address_book = AddressBook()    
 
-  
-
-def input_error(func):
-    def wrapper(*args):
-        try:
-            return func(*args)
-        except IndexError as e:
-            return e
-        return wrapper
