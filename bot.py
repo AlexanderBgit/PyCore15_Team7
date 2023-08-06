@@ -1,9 +1,11 @@
 from AddressBook import *
+from classes import *
 from exeptions import *
 from rich.console import Console
 from rich.table import Table
 from rich import box
 
+ab = AddressBook()
 
 class Bot:
     def __init__(self):
@@ -42,6 +44,13 @@ def exit_command(*args):
 def unknown_command(*args):
     pass
 
+@input_error
+def contacts_in_period(period: int) -> str:
+    result = ab.congratulate(int(period)) #ab = AddressBook()
+    if result:
+        return "\n".join(str(record) for record in result)
+    else:
+        return f"No birthdays in {period} days"
 
 def show_all_command(*args):
     if address_book.data:
@@ -71,5 +80,8 @@ def show_address_book():
 
 
 @input_error
-def change_birthday_command(*args):
-    return 
+def change_birthday_command(name: str, birthday: str) -> str:
+    rec: Record = ab.get(str(name))
+    if rec:
+        return rec.change_birthday(birthday)
+    return f"No {name} in contacts"

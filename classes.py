@@ -98,7 +98,11 @@ class Record:
 
 
     def change_birthday(self, new_birthday):
-        pass
+        try:
+            self.birthday = datetime.strptime(new_birthday, "%d.%m.%Y").date()
+            return f"Birthday set for {self.name}"
+        except ValueError:
+            return f"Invalid birthday format. Please use dd.mm.yyyy format."
 
 
     def add_phone(self, phone):
