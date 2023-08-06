@@ -11,18 +11,6 @@ from classes import *
 class AddressBook(UserDict):
     def add_record(self, record: Record):
         self.data[str(record.name)] = record
-        return f"Contact {record} add success"
-
-
-    def delete_record(self, name: str):
-        if name in self.data:
-            del self.data[name]
-            return f"Contact with name '{name}' deleted successfully"
-        return f"No contact with name '{name}' in address book"
-
-
-    def add_record(self, record: Record):
-        self.data[str(record.name)] = record
         self.save_to_file()  # зберегти після додавання
         return f"Contact {record} added successfully"
 
@@ -47,10 +35,6 @@ class AddressBook(UserDict):
         except FileNotFoundError:
             # якщо файл відсутній, створити
             self.data = {}
-
-
-    def __get_current_week(self):
-        pass
 
 
     def congratulate(self, period: int):
