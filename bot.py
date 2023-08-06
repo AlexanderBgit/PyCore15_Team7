@@ -41,7 +41,22 @@ def unknown_command(*args):
 
 
 def show_all_command(*args):
-    ...
+    if address_book.data:
+        console = Console()
+        table = Table(show_header=True, header_style="bold", box=box.ROUNDED)
+        table.add_column("Name")
+        table.add_column("Phone number")
+        table.add_column("Birthday", style="dim")
+
+        for record in address_book.data.values():
+            name = str(record.name)
+            phone_numbers = ', '.join([str(phone) for phone in record.phones])
+            birthday = str(record.birthday) if record.birthday else "N/A"
+            table.add_row(name, phone_numbers, birthday)
+
+        console.print(table)
+    else:
+        print('No contacts saved.')
 
 
 def hello_command(*args):
