@@ -8,30 +8,45 @@ import pickle
 from classes import *
 
 # Клас AddressBook, який наслідується від UserDict, 
-# та ми потім додамо логіку пошуку за записами до цього класу.
 class AddressBook(UserDict):
     def add_record(self, record: Record):
         self.data[str(record.name)] = record
         return f"Contact {record} add success"
 
 
-    def delete_record(self,):
-        pass
+    def delete_record(self, name: str):
+        if name in self.data:
+            del self.data[name]
+            return f"Contact with name '{name}' deleted successfully"
+        return f"No contact with name '{name}' in address book"
 
-    def add_record(self, record):
-        pass
+
+    def add_record(self, record: Record):
+        self.data[str(record.name)] = record
+        self.save_to_file()  # зберегти після додавання
+        return f"Contact {record} added successfully"
 
 
-    def delete_record(self, name):
-        pass
+    def delete_record(self, name: str):
+        if name in self.data:
+            del self.data[name]
+            self.save_to_file()  # зберегти після видалення
+            return f"Contact with name '{name}' deleted successfully"
+        return f"No contact with name '{name}' in the address book"
 
 
     def save_to_file(self):
-        pass
+        with open("adress.bin", "wb") as file:
+            pickle.dump(self.data, file)
 
 
     def load_from_file(self):
-        pass
+        try:
+            with open("adress.bin", "rb") as file:
+                self.data = pickle.load(file)
+        except FileNotFoundError:
+            # якщо файл відсутній, створити
+            self.data = {}
 
 
     def __get_current_week(self):
@@ -44,11 +59,14 @@ class AddressBook(UserDict):
 
     # метод iterator, який повертає генератор за записами. Пагінація    
     def __iter__(self, n=5):
-        pass
-
+        keys = list(self.data.keys())
+        for i in range(0, len(keys), n):
+            chunk = {key: self.data[key] for key in keys[i:i + n]}
+            yield chunk
+    
 
     def __str__(self) -> str:
-        pass
+        return "\n".join(str(r) for r in self.data.values())
 
 # завантажує записи під час ініціалізації
     def __init__(self):
