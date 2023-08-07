@@ -1,5 +1,14 @@
 
 
+class ValueNeedEnterError(Exception):
+    def __init__(self, value, *args: object) -> None:
+        super().__init__(*args)
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"Operation isn't possible. You mast enter {self.value}."
+
+
 class PhoneError(Exception):
     def __init__(self, value, *args: object) -> None:
         super().__init__(*args)

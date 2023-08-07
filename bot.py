@@ -14,43 +14,86 @@ class Bot:
 
 @input_error
 def add_command(*args):
-    name = args[0]
-    last_name = ""
-    phone_number = None
+    if not len(args):
+        raise ValueNeedEnterError("Name")
+    
+    name = None
+    phone = None
     birthday = None
+    email = None
+    adress = None
+    
+    count = 1
+    for value in args:
+        if count == 1:
+            name = Name(value)
+        if count == 2:
+            phone = Phone(value)
+        if count == 3:
+            birthday = Birthday(value)
+        if count == 4:
+            email = Email(value)
+        if count == 5:
+            adress = Adress(value)
+                
+        count += 1
 
-    # При більше ніж одному аргументі, другий це прізвище, третій - телефон
-    # четвертий аргумент - день народження
-    if len(args) > 1:
-        # чи є прийнятним номер телефону
-        if len(args[-1]) == 10 and args[-1].isdigit():
-            phone_number = Phone(args[-1])
-            if len(args) >= 3:
-                last_name = args[1]
-            if len(args) >= 4:
-                birthday = Birthday(args[2])
-        else:
-            last_name = args[1]
-            if len(args) >= 3:
-                phone_number = Phone(args[2])
-                if len(args) >= 4:
-                    birthday = Birthday(args[3])
+    record = address_book.get(name.value)
 
-     # Чи існує контакт
-    record_name = f"{name} {last_name}".strip()
-    rec = address_book.get(record_name)
-    if rec:
-        if phone_number:
-            return rec.add_phone(phone_number)
+    if record:
+        if phone:
+            record.add_phone(phone)
         if birthday:
-            return rec.change_birthday(birthday)
-        return f"Contact {record_name} already exists in the address book."
-
-    # Створюємо name, phone number, and birthday
-    name_field = Name(f"{name} {last_name}".strip())
-    rec = Record(name_field, phone_number, birthday)
+            record.change_birthday(birthday)
+        if email:
+            record.change_email(email)
+        if adress:
+            record.change_adress(adress)
+        return f"Contact {name.value} updated successfully."
+    
+    record = Record(name, phone, birthday, email, adress)
     address_book.save_to_file()
-    return address_book.add_record(rec)
+    return address_book.add_record(record)
+
+    
+    # //////////////////////////
+    # name = args[0]
+    # last_name = ""
+    # phone_number = None
+    # birthday = None
+
+    # # При більше ніж одному аргументі, другий це прізвище, третій - телефон
+    # # четвертий аргумент - день народження
+    # if len(args) > 1:
+    #     # чи є прийнятним номер телефону
+    #     if len(args[-1]) == 10 and args[-1].isdigit():
+    #         phone_number = Phone(args[-1])
+    #         if len(args) >= 3:
+    #             last_name = args[1]
+    #         if len(args) >= 4:
+    #             birthday = Birthday(args[2])
+    #     else:
+    #         last_name = args[1]
+    #         if len(args) >= 3:
+    #             phone_number = Phone(args[2])
+    #             if len(args) >= 4:
+    #                 birthday = Birthday(args[3])
+
+    #  # Чи існує контакт
+    # record_name = f"{name} {last_name}".strip()
+    # rec = address_book.get(record_name)
+    # if rec:
+    #     if phone_number:
+    #         return rec.add_phone(phone_number)
+    #     if birthday:
+    #         return rec.change_birthday(birthday)
+    #     return f"Contact {record_name} already exists in the address book."
+
+    # # Створюємо name, phone number, and birthday
+    # name_field = Name(f"{name} {last_name}".strip())
+    # rec = Record(name_field, phone_number, birthday)
+    # address_book.save_to_file()
+    # return address_book.add_record(rec)
 
 
 @input_error

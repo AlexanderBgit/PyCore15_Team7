@@ -3,12 +3,6 @@ from bot import *
 from AddressBook import *
 
 
-if __name__ == "__main__":
-    print('Hello. I am your contact-assistant.\nWhat can I help your?')
-    bot = Bot()
-
-# bot.book.load("auto_save")
-#автоматичне завантаження
 
 COMMANDS = {
     add_command: ("add", "+", "2"),
@@ -23,6 +17,7 @@ COMMANDS = {
     change_birthday_command: ("bday", "6"),
     contacts_in_period: ("period", "bdays")
 }
+
 
 def parser(text: str):
     for cmd, kwds in COMMANDS.items():
@@ -51,5 +46,7 @@ def main():
  
 
 if __name__ == "__main__":
+    print('Hello. I am your contact-assistant.\nWhat can I help your?')
+    bot = Bot()
     address_book = AddressBook()
     main()
