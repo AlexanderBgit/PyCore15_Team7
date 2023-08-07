@@ -82,10 +82,9 @@ class Email(Field):
     
 
 class Adress(Field):
-    pass
+    def __init__(self, value):
+         self.value = value
 
-
- 
 
 class Field:
     def __init__(self, value):
