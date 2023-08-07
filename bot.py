@@ -4,6 +4,7 @@ from exeptions import *
 from rich.console import Console
 from rich.table import Table
 from rich import box
+import subprocess
 
 ab = AddressBook()
 
@@ -164,3 +165,11 @@ def change_birthday_command(name: str, birthday: str) -> str:
     if rec:
         return rec.change_birthday(birthday)
     return f"No {name} in contacts"
+
+@input_error
+def sort_files(path):
+    try:
+        result = subprocess.run(["python3", "sort.py", path], capture_output=True, text=True)
+        return result.stdout
+    except Exception as e:
+        return str(e) 
