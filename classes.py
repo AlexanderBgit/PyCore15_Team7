@@ -106,14 +106,9 @@ class Record:
         self.adress = adress
 
 
-    def change_birthday(self, new_birthday:Birthday):
+    def change_birthday(self, new_birthday):
         self.birthday = new_birthday
-        # try:
-        #     self.birthday = datetime.strptime(new_birthday, "%d.%m.%Y").date()
-        #     return f"Birthday set for {self.name}"
-        # except ValueError:
-        #     return f"Invalid birthday format. Please use dd.mm.yyyy format."
-
+        return f"Birthday changed to {new_birthday} for contact {self.name}"
 
     def change_email(self, new_email:Email):
         self.email = new_email
@@ -124,19 +119,22 @@ class Record:
 
     
     def add_phone(self, phone):
-        if str(phone) not in [str(p) for p in self.phones]:
+        if phone not in self.phones:
             self.phones.append(phone)
-            return f"Succesfully added phone '{phone}' to name '{self.name}'"
-        else:
-            return f"Phone '{phone}' is already in record '{self}'"
-
+            return f"Phone {phone} added to contact {self.name}"
+        return f"{phone} is already present in the contact {self.name}"
 
     def change_phone(self, old_phone, new_phone):
-        pass
+        if old_phone in self.phones:
+            self.phones.remove(old_phone)
+            self.phones.append(new_phone)
+            return f"Phone {old_phone} changed to {new_phone} for contact {self.name}"
+        return f"{old_phone} is not present in the contact {self.name}"
 
 
     def change_name(self, new_name):
-        pass
+        self.name = new_name
+        return f"Name changed to {new_name} for contact {self.name}"
 
 
     def days_to_birthday(self):
