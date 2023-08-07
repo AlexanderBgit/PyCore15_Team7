@@ -1,6 +1,7 @@
 from bot import Bot
 from bot import *
 from AddressBook import *
+from rich.console import Console
 
 
 
@@ -13,7 +14,6 @@ COMMANDS = {
     show_all_command: ("show all", "5"),
     hello_command:("hello", "1"),
     edit_name_command: ("edit", "7"),
-    show_address_book: ("page", "**"),
     change_birthday_command: ("bday", "6"),
     contacts_in_period: ("period", "bdays")
 }
@@ -24,9 +24,9 @@ def parser(text: str):
         for kwd in kwds:
             if text.lower().startswith(kwd):
                 data = text[len(kwd):].strip().split()
-                if cmd in [change_command, edit_name_command]:
-                    if len(data) < 3:
-                        data.append(None)
+                # if cmd in [change_command, edit_name_command]:
+                #     if len(data) < 3:
+                #         data.append(None)
                 return cmd, data
     return unknown_command, []
 
@@ -39,7 +39,11 @@ def main():
 
         result = cmd(*data)
 
-        print(result)
+        if isinstance(result, str):
+            print(result)
+        else:
+            console = Console()
+            console.print(result)
         
         if cmd == exit_command:
             break
@@ -48,5 +52,5 @@ def main():
 if __name__ == "__main__":
     print('Hello. I am your contact-assistant.\nWhat can I help your?')
     bot = Bot()
-    address_book = AddressBook()
+    # address_book = AddressBook()
     main()

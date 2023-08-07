@@ -1,5 +1,14 @@
 
 
+class FindRecordError(Exception):
+    def __init__(self, value, *args: object) -> None:
+        super().__init__(*args)
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"Operation isn't possible. Can't find record with name {self.value}."
+
+
 class ValueNeedEnterError(Exception):
     def __init__(self, value, *args: object) -> None:
         super().__init__(*args)
@@ -41,6 +50,10 @@ def input_error(func):
         try:
             return func(*args)
         except IndexError as ex:
+            return ex
+        except ValueNeedEnterError as ex:
+            return ex
+        except FindRecordError as ex:
             return ex
         except PhoneError as ex:
             return ex
