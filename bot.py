@@ -5,7 +5,7 @@ from exeptions import *
 from rich.table import Table
 from rich import box
 import subprocess
-
+import re, os, pickle
 
 
 class Bot:
@@ -269,3 +269,51 @@ def help_command() -> str:
            "- bday [name] for birthday change \n" \
            "- period [n] (n = days of period for Bdays) \n" \
            "- bye, end, exit"
+
+###############################################################################################################
+
+def show_notes(n_str):  # Це показуе або усі або по декілька
+    if n_str > 0:
+        long = len(notes_book)
+        if long <= n_str:
+            print("Ваш список нотаток:")
+            for i in range(len(notes_book)):
+                print(i+1," ",notes_book[i])
+        else:
+            print_one_page(n_str)    
+def print_one_page(n):
+    f = 0
+    fn = 0
+    for i in range(len(notes_book)):
+        f = f + 1
+        fn = fn + 1
+        print(fn, " ", notes_book[i])
+        if f == n:
+            f = 0
+            nn = True
+            while nn:
+                nn = input(f"Щоб подивитися наступні {n} нотаток натисніть Enter.")
+                nn = False
+    print("Всі нотаткии показано.\n")
+
+## Загрузка та збереження. Потім можна доробити та  зберігати після кожного редактування    
+
+def load_note_book():
+    path_note_book = ("save_note_book.bin")
+    if os.path.exists(path_note_book):
+        with open(path_note_book,"br") as fbr:
+            fbr_list = pickle.load(fbr)
+        return fbr_list
+    else:
+        return None 
+
+def save_note_book(list):
+    path_note_book = ("save_note_book.bin")
+    with open(path_note_book,"bw") as fwb:
+        pickle.dump(list, fwb)
+    print("Нотатки збережено.")
+
+notes_book = Notes()
+
+
+##   Далі просто тестова прога під коментом.  #################################################################################
