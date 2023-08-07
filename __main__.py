@@ -10,12 +10,15 @@ COMMANDS = {
     exit_command: ("bye", "exit", "end", "0"),
     delete_contact_command:("del","8"),
     find_command: ("find", "4"),
-    show_all_command: ("show all", "5"),
+    show_all_command: ("show all", "5", "show"),
     hello_command:("hello", "1"),
     edit_name_command: ("edit", "7"),
     show_address_book: ("page", "**"),
     change_birthday_command: ("bday", "6"),
-    contacts_in_period: ("period", "bdays")
+    sort_files: ("sort"),
+    contacts_in_period: ("period", "bdays"),
+    help_command: ("help")
+    
 }
 
 
@@ -33,7 +36,7 @@ def parser(text: str):
 
 def main():
     while True:
-        user_input = input("enter your choises--->>> ")
+        user_input = input("enter your choices--->>> ")
         
         cmd, data = parser(user_input)
 
@@ -46,7 +49,7 @@ def main():
  
 
 if __name__ == "__main__":
-    print('Hello. I am your contact-assistant.\nWhat can I help your?')
+    print('Hello. I am your contact-assistant.\nWhat can I do for you?')
     bot = Bot()
     address_book = AddressBook()
     main()
