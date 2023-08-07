@@ -105,8 +105,7 @@ class Note(Field):
 class Teg(Field):
     pass
 
-## Нотатка має імя саму нотатку список тєгів дату створеня та "wg" для кількості співпадінь  #####################
-
+## Нотатка має імя саму нотатку список тєгів дату створеня та "wg" для кількості співпадінь  
 class Note:
     def __init__(self, name: Name_teg = None, note: Note = None, teg: Teg = None):
         self.wg = 0
@@ -138,8 +137,8 @@ class Note:
         return repr((self.name, self.note, self.tegs, self.wg))
 
 
-## Клас нотатки зробив списком, бо так він ітеруется просто за номером і головне немає полів обовязкових а пошук можна зробити за любим полем  ##
-
+## Клас нотатки зробив списком, бо так він ітеруется просто за номером 
+# і головне немає полів обовязкових а пошук можна зробити за будь-яким полем  ##
 class Notes(UserList):
 
     def add_note(self, note: Note):
@@ -195,7 +194,7 @@ class Record:
         self.adress = adress
 
 
-    def change_birthday(self, new_birthday):
+    def change_birthday(self, new_birthday: Birthday):
         self.birthday = new_birthday
         return f"Birthday changed to {new_birthday} for contact {self.name}"
 
@@ -207,7 +206,7 @@ class Record:
         self.adress = new_adress
 
     
-    def add_phone(self, phone):
+    def add_phone(self, phone: Phone):
         if phone not in self.phones:
             self.phones.append(phone)
             return f"Phone {phone} added to contact {self.name}"
@@ -221,15 +220,11 @@ class Record:
         return f"{old_phone} is not present in the contact {self.name}"
 
 
-    def change_name(self, new_name):
+    def change_name(self, new_name: Name):
         self.name = new_name
         return f"Name changed to {new_name} for contact {self.name}"
 
-
-    def days_to_birthday(self):
-        pass
-
-    
+        
     def __str__(self) -> str:
         result = ""
         if self.name:

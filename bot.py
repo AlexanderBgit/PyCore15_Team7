@@ -57,46 +57,6 @@ def add_command(*args):
     return address_book.add_record(record)
 
     
-    # //////////////////////////
-    # name = args[0]
-    # last_name = ""
-    # phone_number = None
-    # birthday = None
-
-    # # При більше ніж одному аргументі, другий це прізвище, третій - телефон
-    # # четвертий аргумент - день народження
-    # if len(args) > 1:
-    #     # чи є прийнятним номер телефону
-    #     if len(args[-1]) == 10 and args[-1].isdigit():
-    #         phone_number = Phone(args[-1])
-    #         if len(args) >= 3:
-    #             last_name = args[1]
-    #         if len(args) >= 4:
-    #             birthday = Birthday(args[2])
-    #     else:
-    #         last_name = args[1]
-    #         if len(args) >= 3:
-    #             phone_number = Phone(args[2])
-    #             if len(args) >= 4:
-    #                 birthday = Birthday(args[3])
-
-    #  # Чи існує контакт
-    # record_name = f"{name} {last_name}".strip()
-    # rec = address_book.get(record_name)
-    # if rec:
-    #     if phone_number:
-    #         return rec.add_phone(phone_number)
-    #     if birthday:
-    #         return rec.change_birthday(birthday)
-    #     return f"Contact {record_name} already exists in the address book."
-
-    # # Створюємо name, phone number, and birthday
-    # name_field = Name(f"{name} {last_name}".strip())
-    # rec = Record(name_field, phone_number, birthday)
-    # address_book.save_to_file()
-    # return address_book.add_record(rec)
-
-
 @input_error
 def change_command(*args):
     if not len(args):
@@ -253,10 +213,10 @@ def sort_files(path):
         return str(e) 
 
 @input_error
-def help_command() -> str:
+def help_command(*data) -> str:
     return "Available commands:\n" \
            "- hello\n" \
-           "- add [name] [phone in format +380xxxxxxx]\n" \
+           "- add [name] [phone in format +380xxxxxxx] [birthday] [email] [adress]\n" \
            "- change [name] [phone]\n" \
            "- find [name]\n" \
            "- show_all\n" \
@@ -268,10 +228,11 @@ def help_command() -> str:
            "- sort [path] \n" \
            "- bday [name] for birthday change \n" \
            "- period [n] (n = days of period for Bdays) \n" \
-           "- bye, end, exit"
-
-###############################################################################################################
-
+           "- bye, end, exit \n" \
+           "- help"
+    
+# команди роботи з нотатками
+@input_error
 def show_notes(n_str):  # Це показуе або усі або по декілька
     if n_str > 0:
         long = len(notes_book)
@@ -298,6 +259,7 @@ def print_one_page(n):
 
 ## Загрузка та збереження. Потім можна доробити та  зберігати після кожного редактування    
 
+@input_error
 def load_note_book():
     path_note_book = ("save_note_book.bin")
     if os.path.exists(path_note_book):
@@ -307,6 +269,7 @@ def load_note_book():
     else:
         return None 
 
+@input_error
 def save_note_book(list):
     path_note_book = ("save_note_book.bin")
     with open(path_note_book,"bw") as fwb:
@@ -314,6 +277,3 @@ def save_note_book(list):
     print("Нотатки збережено.")
 
 notes_book = Notes()
-
-
-##   Далі просто тестова прога під коментом.  #################################################################################

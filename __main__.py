@@ -6,17 +6,17 @@ from rich.console import Console
 
 
 COMMANDS = {
-    add_command: ("add", "+", "2"),
+    add_command: ("add", "+", "2","adding","append"),
     change_command: ("change", "зміни", "3"),
-    exit_command: ("bye", "exit", "end", "0"),
-    delete_contact_command:("del","8"),
+    exit_command: ("bye", "exit", "end","GoodBye", "0"),
+    delete_contact_command:("del","8", "delete"),
     find_command: ("find", "4"),
-    show_all_command: ("show all", "5", "show"),
+    show_all_command: ("show all", "5", "show","showing"),
     hello_command:("hello", "1"),
-    edit_name_command: ("edit", "7"),
-    change_birthday_command: ("bday", "6"),
-    sort_files: ("sort"),
-    contacts_in_period: ("period", "bdays"),
+    edit_name_command: ("edit", "7","rename"),
+    change_birthday_command: ("bday", "6","birthday"),
+    sort_files: ("sort","sorting"),
+    contacts_in_period: ("period", "bdays","congrats"),
     help_command: ("help")
     
 }
