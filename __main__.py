@@ -16,7 +16,9 @@ COMMANDS = {
     show_address_book: ("page", "**"),
     change_birthday_command: ("bday", "6"),
     sort_files: ("sort"),
-    contacts_in_period: ("period", "bdays")
+    contacts_in_period: ("period", "bdays"),
+    help_command: ("help")
+    
 }
 
 
