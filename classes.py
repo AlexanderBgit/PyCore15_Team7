@@ -1,6 +1,5 @@
 from datetime import datetime, date
 import re
-from AddressBook import *
 from exeptions import *
 from collections import UserDict, UserList
 
@@ -196,32 +195,44 @@ class Record:
 
     def change_birthday(self, new_birthday: Birthday):
         self.birthday = new_birthday
+        # address_book.save_to_file()
         return f"Birthday changed to {new_birthday} for contact {self.name}"
 
     def change_email(self, new_email:Email):
         self.email = new_email
-
+        # address_book.save_to_file()
+        return f"Email changed to {new_email} for contact {self.name}"
     
     def change_adress(self, new_adress:Adress):
         self.adress = new_adress
-
+        # address_book.save_to_file()
+        return f"Address changed to {new_adress} for contact {self.name}"
     
     def add_phone(self, phone: Phone):
-        if phone not in self.phones:
+        if str(phone) not in [str(p) for p in self.phones]:
             self.phones.append(phone)
-            return f"Phone {phone} added to contact {self.name}"
-        return f"{phone} is already present in the contact {self.name}"
+            # address_book.save_to_file()
+            return f"Succesfully added phone '{phone}' to name '{self.name}'"
+        else:
+            return f"Phone '{phone}' is already in record '{self}'"
 
-    def change_phone(self, old_phone, new_phone):
-        if old_phone in self.phones:
-            self.phones.remove(old_phone)
-            self.phones.append(new_phone)
-            return f"Phone {old_phone} changed to {new_phone} for contact {self.name}"
-        return f"{old_phone} is not present in the contact {self.name}"
+    def change_phone(self, old_phone: Phone, new_phone: Phone):
+        phones_list = [str(p) for p in self.phones]
+
+        if str(old_phone) not in phones_list:
+            return f"There is no phone '{old_phone}' in record '{self}'"
+        if str(new_phone) in phones_list:
+            return f"Phone '{new_phone}' is already in record '{self}'"
+        
+        index = phones_list.index(old_phone.value)
+        self.phones[index] = new_phone
+        # address_book.save_to_file()
+        return f"Succesfully changed phone '{old_phone}' to '{new_phone}'"
 
 
     def change_name(self, new_name: Name):
         self.name = new_name
+        # address_book.save_to_file()
         return f"Name changed to {new_name} for contact {self.name}"
 
         
