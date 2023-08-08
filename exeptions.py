@@ -33,7 +33,7 @@ class BirthdayError(Exception):
         self.value = value
 
     def __str__(self) -> str:
-        return f"Incorrect birthday: {self.value}. Date of birth must be one of the formats: '11-11-1111', '11.11.1111' or '11/11/11'"
+        return f"Incorrect birthday: {self.value}. Date of birth must be one of the formats: '11-11-1111'"
 
 
 class EmailError(Exception):
@@ -43,6 +43,15 @@ class EmailError(Exception):
 
     def __str__(self) -> str:
         return f"Incorrect email: {self.value}. Email must match a pattern: 'email@domain.dom'."
+
+class UnknownFieldError(Exception):
+    def __init__(self, value, *args: object) -> None:
+        super().__init__(*args)
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"Unknown field: {self.value}"
+
 
 
 def input_error(func):
@@ -60,6 +69,8 @@ def input_error(func):
         except BirthdayError as ex:
             return ex
         except EmailError as ex:
+            return ex
+        except UnknownFieldError as ex:
             return ex
     
     return wrapper
