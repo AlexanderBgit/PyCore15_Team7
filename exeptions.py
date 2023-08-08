@@ -6,7 +6,7 @@ class FindRecordError(Exception):
         self.value = value
 
     def __str__(self) -> str:
-        return f"Operation isn't possible. Can't find record with name {self.value}."
+        return f"Operation impossible. Can't find record with name {self.value}."
 
 
 class ValueNeedEnterError(Exception):
@@ -15,7 +15,7 @@ class ValueNeedEnterError(Exception):
         self.value = value
 
     def __str__(self) -> str:
-        return f"Operation isn't possible. You mast enter {self.value}."
+        return f"Operation impossible. You must enter {self.value}."
 
 
 class PhoneError(Exception):
@@ -33,7 +33,7 @@ class BirthdayError(Exception):
         self.value = value
 
     def __str__(self) -> str:
-        return f"Incorrect birthday: {self.value}. Date of birth must be one of the formats: '11-11-1111', '11.11.1111', '11/11/11'"
+        return f"Incorrect birthday: {self.value}. Date of birth must be one of the formats: '11-11-1111', '11.11.1111' or '11/11/11'"
 
 
 class EmailError(Exception):
