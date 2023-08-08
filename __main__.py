@@ -4,7 +4,6 @@ from AddressBook import *
 from rich.console import Console
 from classes import *
 
-
 COMMANDS = {
     add_command: ("add", "+", "2","adding","append"),
     change_command: ("change", "зміни", "3"),
