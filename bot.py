@@ -12,6 +12,25 @@ class Bot:
     def __init__(self):
         self.value = AddressBook()
 
+def make_table_from_records(records:list[Record]) -> Table:
+    table = Table(show_header=True, header_style="bold", box=box.ROUNDED)
+    table.add_column("Name")
+    table.add_column("Phone number")
+    table.add_column("Birthday", style="dim")
+    table.add_column("Email")
+    table.add_column("Adress")
+
+    for record in records:
+        name = str(record.name)
+        phone_numbers = ', '.join([str(phone) for phone in record.phones])
+        birthday = str(record.birthday) if record.birthday else "N/A"
+        email = str(record.email) if record.email else "N/A"
+        adress = str(record.adress) if record.adress else "N/A"
+        table.add_row(name, phone_numbers, birthday, email, adress)
+
+    return table
+
+
 @input_error
 def add_command(*args):
     if not len(args):
@@ -105,15 +124,16 @@ def change_command(*args):
     record = address_book.get(name.value)
 
     if record:
-        record.change_phone(old_phone, new_phone)
+        result = list()
+        result.append(record.change_phone(old_phone, new_phone))
         
         if birthday:
-            record.change_birthday(birthday)
+            result.append(record.change_birthday(birthday))
         if email:
-            record.change_email(email)
+            result.append(record.change_email(email))
         if adress:
-            record.change_adress(adress)
-        return f"Contact {name.value} updated successfully."
+            result.append(record.change_adress(adress))
+        return "\n".join(result)
     else:
         raise FindRecordError(name.value)
 
@@ -152,16 +172,22 @@ def delete_contact_command(*args):
 @input_error
 def find_command(*args):
     if not len(args):
-        raise ValueNeedEnterError("Name")
+        raise ValueNeedEnterError("Search word or other symbols")
     
-    name = Name(args[0])
+    search_word = args[0]
     
-    record = address_book.get(name.value)
+    records = list()
 
-    if record:
-        return f"Successfuly find record: {record}"
+    for key, record in address_book.data.items():
+        if search_word in key or search_word in str(record):
+            records.append(record)
+    
+    table:Table = make_table_from_records(records)
+
+    if len(table.rows):
+        return table
     else:
-        raise FindRecordError(name)
+        return "No contacts find."
 
 
 def exit_command(*args):
@@ -208,6 +234,42 @@ def show_all_command(*args):
 
 def hello_command(*args):
     return "How can I help you?"
+
+
+@input_error
+def change_email_command(*args):
+    if not len(args):
+        raise ValueNeedEnterError("Name")
+    if len(args) < 2:
+        raise ValueNeedEnterError("Email")
+    
+    name = Name(args[0])
+    
+    record = address_book.get(name.value)
+
+    if record:
+        email = Email(args[1])
+        return record.change_email(email)
+    else:
+        raise FindRecordError(name)
+    
+
+@input_error
+def change_address_command(*args):
+    if not len(args):
+        raise ValueNeedEnterError("Name")
+    if len(args) < 2:
+        raise ValueNeedEnterError("Address")
+    
+    name = Name(args[0])
+    
+    record = address_book.get(name.value)
+
+    if record:
+        address = Adress(args[1])
+        return record.change_adress(address)
+    else:
+        raise FindRecordError(name)
 
 
 @input_error
