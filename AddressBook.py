@@ -43,10 +43,11 @@ class AddressBook(UserDict):
         results = []
         for record in self.data.values():
             if record.birthday:
-                next_birthday = datetime(current_date.year, record.birthday.month, record.birthday.day).date()
+                birthdate = record.birthday.value.date()
+                next_birthday = datetime(current_date.year, birthdate.month, birthdate.day).date()
 
                 if next_birthday < current_date:
-                    next_birthday = datetime(current_date.year + 1, record.birthday.month, record.birthday.day).date()
+                    next_birthday = datetime(current_date.year + 1, birthdate.month, birthdate.day).date()
 
                 days_to_bd = (next_birthday - current_date).days
                 if 0 <= days_to_bd <= period:
