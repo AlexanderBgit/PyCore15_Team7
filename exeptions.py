@@ -44,6 +44,15 @@ class EmailError(Exception):
     def __str__(self) -> str:
         return f"Incorrect email: {self.value}. Email must match a pattern: 'email@domain.dom'."
 
+class UnknownFieldError(Exception):
+    def __init__(self, value, *args: object) -> None:
+        super().__init__(*args)
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"Unknown field: {self.value}"
+
+
 
 def input_error(func):
     def wrapper(*args):
@@ -60,6 +69,8 @@ def input_error(func):
         except BirthdayError as ex:
             return ex
         except EmailError as ex:
+            return ex
+        except UnknownFieldError as ex:
             return ex
     
     return wrapper

@@ -5,7 +5,7 @@ from rich import box
 from datetime import datetime, date, timedelta
 import re
 import pickle
-from classes import *
+from classes import Record
 
 # Клас AddressBook, який наслідується від UserDict, 
 class AddressBook(UserDict):

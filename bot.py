@@ -12,33 +12,43 @@ class Bot:
     def __init__(self):
         self.value = AddressBook()
 
-
 @input_error
 def add_command(*args):
     if not len(args):
         raise ValueNeedEnterError("Name")
-    
+
     name = None
-    phone = None
-    birthday = None
-    email = None
-    adress = None
-    
+    phone = ""
+    birthday = ""
+    email = ""
+    adress = ""
+
     count = 1
     for value in args:
         if count == 1:
             name = Name(value)
-        if count == 2:
-            phone = Phone(value)
-        if count == 3:
-            birthday = Birthday(value)
-        if count == 4:
-            email = Email(value)
-        if count == 5:
-            adress = Adress(value)
-                
-        count += 1
+        else:
+            lower_value = value.lower()
 
+            if "-" in lower_value or "/" in lower_value:
+                birthday = Birthday(value)
+            elif "@" in value:
+                if re.match(r"([a-zA-Z]{1}[a-zA-Z0-9_.]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,})", value):
+                    email = Email(value)
+                else:
+                    raise EmailError(value)
+            elif value.startswith("+"):
+                if re.match(r"\+\d{11,13}", value):
+                    phone = Phone(value)
+                else:
+                    raise PhoneError(value)
+            elif count == len(args) and not any(symbol in value for symbol in ['-', '/', '@', '+']):
+                adress = Adress(value)
+            else:
+                raise UnknownFieldError(value)
+
+        count += 1
+        
     record = address_book.get(name.value)
 
     if record:
@@ -51,10 +61,13 @@ def add_command(*args):
         if adress:
             record.change_adress(adress)
         return f"Contact {name.value} updated successfully."
-    
+
     record = Record(name, phone, birthday, email, adress)
     address_book.save_to_file()
     return address_book.add_record(record)
+    
+
+
 
     
 @input_error
