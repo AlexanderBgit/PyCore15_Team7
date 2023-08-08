@@ -16,7 +16,7 @@ COMMANDS = {
     edit_name_command: ("edit", "7","rename"),
     change_birthday_command: ("bday", "6","birthday"),
     sort_files: ("sort","sorting"),
-    contacts_in_period: ("period", "bdays","congrats"),
+    contacts_in_period: ("period", "hdays", "happyday", "congrats"),
     help_command: ("help")
     
 }
