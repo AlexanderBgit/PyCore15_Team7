@@ -2,7 +2,7 @@ from bot import Bot
 from bot import *
 from AddressBook import *
 from rich.console import Console
-
+from classes import *
 
 
 COMMANDS = {
