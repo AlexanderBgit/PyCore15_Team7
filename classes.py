@@ -97,10 +97,6 @@ class Field:
     def __repr__(self):
         return str(self)
 
-
-###############################################################################################################
-
-
 class Record:
     def __init__(self, name: Name, phone: Phone = None, birthday: Birthday = None, email: Email = None, adress: Adress = None) -> None:
         self.name = name
