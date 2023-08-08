@@ -33,7 +33,7 @@ class BirthdayError(Exception):
         self.value = value
 
     def __str__(self) -> str:
-        return f"Incorrect birthday: {self.value}. Date of birth must be one of the formats: '11-11-1111', '11.11.1111' or '11/11/11'"
+        return f"Incorrect birthday: {self.value}. Date of birth must be one of the formats: '11-11-1111'"
 
 
 class EmailError(Exception):

@@ -30,25 +30,28 @@ def add_command(*args):
         else:
             lower_value = value.lower()
 
-            if "-" in lower_value or "/" in lower_value:
+            if "-" in lower_value:
                 birthday = Birthday(value)
+
             elif "@" in value:
                 if re.match(r"([a-zA-Z]{1}[a-zA-Z0-9_.]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,})", value):
                     email = Email(value)
                 else:
                     raise EmailError(value)
+                
             elif value.startswith("+"):
                 if re.match(r"\+\d{11,13}", value):
                     phone = Phone(value)
                 else:
                     raise PhoneError(value)
+                
             elif count == len(args) and not any(symbol in value for symbol in ['-', '/', '@', '+']):
                 adress = Adress(value)
             else:
                 raise UnknownFieldError(value)
 
         count += 1
-        
+
     record = address_book.get(name.value)
 
     if record:
@@ -66,9 +69,6 @@ def add_command(*args):
     address_book.save_to_file()
     return address_book.add_record(record)
     
-
-
-
     
 @input_error
 def change_command(*args):
