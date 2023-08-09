@@ -165,12 +165,34 @@ class Notes(UserList):
         return (f"\n\n".join("Нотатка № "+str(i+1)+" "+str(self.data[i]) for i in range(len(self.data))))
 
 ###############################################################################################################
+'''
+try:
+        int(list_input[2])
+    except ValueError:
+        list_input[2]=-1
+
+try:
+        return datetime.strptime(str_date, "%d-%m-%Y").date()
+    except ValueError:
+        print("Введіть коректну дату. Формат: dd-mm-yyyy")
+        return None  
+'''
+###############################################################################################################
+def  bot_add_teg(teg_text, number_note):
+    try:
+        int(number_note)
+    except ValueError:
+        return print("Було введено не розпізнане число. Введіть будь ласка вірний номер нотатки.")
+    if (number_note <= len(notes_book)) and (number_note > 0):
+        notes_book[number_note-1].add_teg(teg_text)
+
+
 
 def make_note(name, note, teg): # Робить нову нотатку та додає у кінець списка. Поля не обов'язкові.
     notatca = Note(name, note, teg)
     notes_book.add_note(notatca)
 
-#def 
+
 
 def show_notes(n_str = -1):  # Це показуе або усі або по декілька нотаток на один раз.
     if n_str > 0:
