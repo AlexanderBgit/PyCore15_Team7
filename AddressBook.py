@@ -43,7 +43,7 @@ class AddressBook(UserDict):
         results = []
         for record in self.data.values():
             if record.birthday:
-                birthdate = record.birthday.value.date()
+                birthdate = record.birthday.value
                 next_birthday = datetime(current_date.year, birthdate.month, birthdate.day).date()
 
                 if next_birthday < current_date:
