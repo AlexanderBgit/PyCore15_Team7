@@ -52,6 +52,13 @@ class UnknownFieldError(Exception):
     def __str__(self) -> str:
         return f"Unknown field: {self.value}"
 
+class TypeErrorError(Exception):
+    def __init__(self, value, *args: object) -> None:
+        super().__init__(*args)
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"Unknown: {self.value}"
 
 
 def input_error(func):
@@ -71,6 +78,8 @@ def input_error(func):
         except EmailError as ex:
             return ex
         except UnknownFieldError as ex:
+            return ex
+        except TypeErrorError as ex:
             return ex
     
     return wrapper

@@ -3,7 +3,9 @@ from bot import *
 from AddressBook import *
 from rich.console import Console
 from classes import *
+from note_tag import *
 import difflib
+
 
 COMMANDS = {
     add_command: ("add", "+", "2","adding","append"),
@@ -19,11 +21,13 @@ COMMANDS = {
     change_address_command: ("change-address", "10","changeaddress"),
     sort_files: ("sort","sorting"),
     contacts_in_period: ("period", "bdays","congrats"),
-    help_command: ("help")
+    help_command: ("help"),
+    show_notes: ("show-notes", "n5"),
+    make_note: ("make-notes", "add-notes", "+n")
     
 }
 
-def get_closest_matches(user_input, commands):
+def get_closest_matches(user_input, commands, n=3, cutoff=0.6):
     user_input_lower = user_input.lower()
     closest_matches = []
     for cmd, kwds in commands.items():
@@ -36,7 +40,7 @@ def get_closest_matches(user_input, commands):
             for kwd in kwds:
                 for word in user_words:
                     similarity = difflib.SequenceMatcher(None, word, kwd).ratio()
-                    if similarity >= 0.1:  # Поріг схожості, можна налаштувати під свої потреби
+                    if similarity >= 0.5:  # Поріг схожості, можна налаштувати під свої потреби
                         closest_matches.append(kwd)
                         break
     return closest_matches
