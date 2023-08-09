@@ -23,8 +23,8 @@ class Note(Field):
 class Teg(Field):
     pass
 
-## Нотатка має імя саму нотатку список тєгів дату створеня та "wg" для кількості співпадінь  #####################
-
+## Нотатка має імя саму нотатку список тєгів дату створеня та "wg" для кількості співпадінь. 
+ 
 class Note:
     def __init__(self, name: Name_teg = None, note: Note = None, teg: Teg = None):
         self.wg = 0
@@ -38,6 +38,9 @@ class Note:
         else:
             self.name = name
 
+## Методи додати тег, очистити записати новий тег, змінити текст нотатки, та добавити текст нотатки.
+## Методи використовуются у відповідних функціях бота.
+
     def add_teg(self, teg_input):
         self.tegs.append(teg_input)
 
@@ -49,6 +52,9 @@ class Note:
     def change_text_note(self, note_input):
         self.note = note_input
 
+    def add_text_note(self, note_input):
+        self.note = self.note + " ", + note_input    
+
     def __str__(self):
         return f"Ім'я: {self.name}. Дата створення:  {self.data.date()}\nЗміст: {self.note} \nТєги: {' '.join(str(tg) for tg in self.tegs)} wg:={self.wg}"
 
@@ -56,15 +62,15 @@ class Note:
         return repr((self.name, self.note, self.tegs, self.wg))
 
 
-## Клас нотатки зробив списком, бо так він ітеруется просто за номером і головне немає полів обовязкових а пошук можна зробити за любим полем  ##
+## Клас нотатки зробив списком, бо так він ітеруется просто за номером і головне немає полів обовязкових а пошук можна зробити за любим полем.  
 
 class Notes(UserList):
 
-    def add_note(self, note: Note):
+    def add_note(self, note: Note):## Метод який задіяний у функціі створеня чи запису новоі нотатки.
         self.data.append(note)
-        return print(f"Нотатка: {note.name} було добавлено.")  # Чи виводити подумаю бо може бути багато.
+        return print(f"Нотатку: {note.name} було створено та збережено.")  # Чи виводити подумаю бо може бути багато.
     
-    def search_by_tegs(self, teg_input):        ## Шукає за тєгами, теги список може бути купа ціла навіть однакові, але це поправимо 
+    def search_by_tegs(self, teg_input):        ## Шукає за тєгами, теги список може бути купа ціла навіть однакові. 
         print(f"Пошук за тегом: {teg_input}\n")
         for i in range(len(notes_book)):
             notes_book[i].wg = 0
@@ -94,14 +100,17 @@ class Notes(UserList):
                 n_mach = n_mach + len(re.findall(word_input.lower(), notes_book[i].name.lower()))
 
             notes_book[i].wg =  notes_book[i].wg + n_mach
-            if notes_book[i].wg:
-                print(f"Нотатка №: {i+1} має {notes_book[i].wg} збігів: {word_input}")
-                print(notes_book[i],"\n")
-        #notes_book.sorted_wg() 
+            ## Це якщо виводити не відсортовані нотатки а тільки ті що мають збіг без сортування.
+            #if notes_book[i].wg:
+            #    print(f"Нотатка №: {i+1} має {notes_book[i].wg} збігів: {word_input}")
+            #    print(notes_book[i],"\n")
+        notes_book.sorted_wg()
+        print(notes_book)
+        ## Це якщо виводити тільки ті що мают збіг. 
         #for i in range(len(notes_book)):
         #    if notes_book[i].wg:
         #        print(f"Нотатка №: {i+1} має {notes_book[i].wg} збігів: {word_input}")
-                       
+        #        print(notes_book[i])      
         return None
     
     def sorted_wg(self):
