@@ -3,6 +3,7 @@ from bot import *
 from AddressBook import *
 from rich.console import Console
 from classes import *
+import difflib
 
 COMMANDS = {
     add_command: ("add", "+", "2","adding","append"),
@@ -22,6 +23,23 @@ COMMANDS = {
     
 }
 
+def get_closest_matches(user_input, commands):
+    user_input_lower = user_input.lower()
+    closest_matches = []
+    for cmd, kwds in commands.items():
+        for kwd in kwds:
+            if kwd in user_input_lower:
+                closest_matches.append(kwd)
+    if not closest_matches:
+        user_words = user_input_lower.split()
+        for cmd, kwds in commands.items():
+            for kwd in kwds:
+                for word in user_words:
+                    similarity = difflib.SequenceMatcher(None, word, kwd).ratio()
+                    if similarity >= 0.1:  # Поріг схожості, можна налаштувати під свої потреби
+                        closest_matches.append(kwd)
+                        break
+    return closest_matches
 
 def parser(text: str):
     text_lst = text.split(" ")
@@ -30,6 +48,12 @@ def parser(text: str):
         if len(text_lst) and kwd in kwds:
             data = text[len(kwd):].strip().split()
             return cmd, data
+
+    matches = get_closest_matches(text, COMMANDS)
+    if matches:
+        return closest_matches_suggestion, (matches,)
+
+    return unknown_command, [text]
         
         # for kwd in kwds:
         #     if text.lower().startswith(kwd):
@@ -38,26 +62,38 @@ def parser(text: str):
         #             if len(data) < 3:
         #                 data.append(None)
         #         return cmd, data
-    return unknown_command, []
 
+
+def closest_matches_suggestion(matches):
+    return f"Did you mean one of the following commands: {', '.join(matches)}?"
+
+def unknown_command(text):
+    return f"Unknown command: '{text}'. Type 'help' to see the list of available commands."
 
 def main():
     while True:
         user_input = input("enter your choices--->>> ")
-        
+
         cmd, data = parser(user_input)
 
         if cmd == exit_command:
+            print("Goodbye!")
             break
 
-        result = cmd(*data)
+        result = cmd(*data)  # Оброблюємо команду та отримуємо результат
 
-        if isinstance(result, str):
-            print(result)
+        if cmd == closest_matches_suggestion:
+            print(result)  # Виводимо повідомлення з пропозиціями варіантів команд
+        elif cmd == unknown_command:
+            print(result)  # Виводимо повідомлення про невідому команду
         else:
-            console = Console()
-            console.print(result)
-        
+            if isinstance(result, str):
+                print(result)
+            else:
+                console = Console()
+                console.print(result)
+
+       
  
 
 if __name__ == "__main__":
