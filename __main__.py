@@ -5,6 +5,9 @@ from rich.console import Console
 from classes import *
 import difflib
 
+# for package install
+VERSION = "0.9.0"
+
 COMMANDS = {
     add_command: ("add", "+", "2","adding","append"),
     change_command: ("change", "зміни", "3"),
@@ -71,6 +74,8 @@ def unknown_command(text):
     return f"Unknown command: '{text}'. Type 'help' to see the list of available commands."
 
 def main():
+    print('Hello. I am your contact-assistant.\nWhat can I do for you?')
+    
     while True:
         user_input = input("enter your choices--->>> ")
 
@@ -97,6 +102,5 @@ def main():
  
 
 if __name__ == "__main__":
-    print('Hello. I am your contact-assistant.\nWhat can I do for you?')
     bot = Bot()
     main()
