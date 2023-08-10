@@ -291,18 +291,18 @@ def sort_files(path):
 def help_command(*data) -> str:
     return "Available commands:\n" \
            "- hello\n" \
-           "- add [name] [phone in format +380xxxxxxx] [birthday] [email] [adress]\n" \
+           "- add [name] [phone in format +380xxxxxxx] [birthday in format dd-mm-yyyy] [email] [adress]\n" \
            "- change [name] [phone]\n" \
            "- find [name]\n" \
            "- show_all\n" \
            "- edit [name]\n" \
-           "- birthday [name] [date in format dd.mm.yyyy]\n" \
+           "- birthday [name] [date in format dd-mm-yyyy]\n" \
            "- period [number of days]\n" \
            "- help \n" \
            "- del [name] \n" \
            "- sort [path] \n" \
-           "- bday [name] for birthday change \n" \
-           "- period [n] (n = days of period for Bdays) \n" \
+           "- bday [name] [new_birthday] for birthday change \n" \
+           "- congrats [n] (n = days of period for Birthdays) \n" \
            "- bye, end, exit \n" \
            "- help"
     
