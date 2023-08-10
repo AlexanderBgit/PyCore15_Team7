@@ -34,12 +34,12 @@ future
     only comands
 
     Додавання контакта: ("add", "+", "2","adding","append")
-    [name] [phone in format +380xxxxxxx] [birthday] [email][adress] 
+    [name] [phone in format +380xxxxxxx] [birthday in format dd-mm-yyyy] [email][adress] 
     
     Зміна запису контакта: ("change", "зміни", "3")
     [name] + [**argument]
 
-    Вхід з асистантсу: ("bye", "exit", "end","GoodBye", "0"),
+    Вихід з асистантсу: ("bye", "exit", "end","GoodBye", "0"),
     only comands
 
     Видалення запису:("del","8", "delete")
@@ -78,7 +78,7 @@ future
 
 День народження_
 Дні народження сприймаються у трьох форматах розділових знаків.
-обов'язкове введення дд-мм-рррр з використанням розділювача "-", "/" або "."
+обов'язкове введення дд-мм-рррр з використанням розділювача "-"
 
 Електронна адреса_
 email перевіряється регулярними виразами. Приклад email що є правильним до введення 'email@domain.dom'."
