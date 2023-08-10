@@ -146,9 +146,10 @@ class Record:
 
 
     def change_name(self, new_name: Name):
+        old_name = self.name
         self.name = new_name
         # address_book.save_to_file()
-        return f"Name changed to {new_name} for contact {self.name}"
+        return f"Name changed to {new_name} for old contact {old_name}"
 
         
     def __str__(self) -> str:

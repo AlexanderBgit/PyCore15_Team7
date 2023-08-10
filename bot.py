@@ -140,7 +140,7 @@ def change_command(*args):
 
 @input_error
 def edit_name_command(*args):
-    if len(args) < 3:
+    if len(args) < 2:
         raise ValueNeedEnterError("Old Name and New Name")
     
     old_name = Name(args[0])
@@ -273,11 +273,21 @@ def change_address_command(*args):
 
 
 @input_error
-def change_birthday_command(name: str, birthday: str) -> str:
-    rec: Record = address_book.get(str(name))
-    if rec:
-        return rec.change_birthday(birthday)
-    return f"No {name} in contacts"
+def change_birthday_command(*args) -> str:
+    if not len(args):
+        raise ValueNeedEnterError("Name")
+    if len(args) < 2:
+        raise ValueNeedEnterError("Birthday")
+    
+    name = Name(args[0])
+    
+    record = address_book.get(name.value)
+
+    if record:
+        birthday = Birthday(args[1])
+        return record.change_adress(birthday)
+    else:
+        raise FindRecordError(name)
 
 @input_error
 def sort_files(path):
