@@ -314,7 +314,17 @@ def help_command(*data) -> str:
            "- bday [name] [new_birthday] for birthday change \n" \
            "- congrats [n] (n = days of period for Birthdays) \n" \
            "- bye, end, exit \n" \
-           "- help"
+           "- show-notes \n" \
+           "- add-notes \n" \
+           "- add-tag \n" \
+           "- change-tag \n" \
+           "- add-text \n" \
+           "- change-text \n" \
+           "- delete-note \n" \
+           "- search-n \n" \
+           "- fnt \n" \
+           "- >>> space is the reserved argument separator character <<<"
+  
     
 # команди роботи з нотатками
 @input_error

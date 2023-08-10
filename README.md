@@ -16,6 +16,8 @@ future
 файл classe.py
 використовувані класи
 
+файл notes_tag.py
+
 файл exeptions.py
 Перелік обробок (помилок) винятків, що виникають у функціях з відповідними відповідями користувачу.
 
@@ -25,6 +27,8 @@ future
 
 файл requirements.py
 інструкцію щодо встановлення пакету програми 
+
+
 
 
 Довідково:
@@ -65,7 +69,28 @@ future
 
     Виведення списку команд: ("help")
     [name]
-        
+
+    Вивести на екран всі наявні нотатки ("show-notes", "n5")
+    only comands
+
+    Додати нотатку: ("make-notes", "add-notes", "+n")
+    [Name] [Note] [Tag]
+
+    Додати тег: ("add-tag","+t")
+    [Teg name] [Note number]
+ 
+    Додати опис: ("add-text")
+    [Note text] [Note number]
+
+    Змінити опис: ("change-text","=text")
+    [Note text] [Note number]
+
+    Змінити тег: ("change-tag","=t")
+    [Teg name] [Note number]
+
+    Пошук нотатків та тегів  ("search-n","search-notes","search-tag","fnt")
+    за критерієм частини телефону або ім'я [*part*]
+
 
 
 == Перевірка коретності введення записів / маски аргументів ==

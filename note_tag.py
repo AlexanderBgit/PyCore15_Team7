@@ -172,67 +172,89 @@ class Notes(UserList):
 # Далі пішли функціі бота тоб то функціі які викликають методи класів і з ними працюють.
 # Ці функціі знаходятся у файлу бота. Все те що вищще у файлі класів.
 
-
-
-def bot_add_teg(teg_text, number_note):  # Додає тег teg_text до нотатки № number_note з перевіркою номера нотатки.
+@input_error
+def bot_add_teg(*args):  # Додає тег teg_text до нотатки № number_note з перевіркою номера нотатки.
+    if len(args) != 2:
+        raise ValueNeedEnterError("Teg name and Note number")
+    
     try:  # Не потребуе декоратора помилок.
-        int(number_note)
+        number_note = int(args[1])
     except ValueError:
-        return print(
-            "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки.")
+        return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
     if (number_note <= len(notes_book)) and (number_note > 0):
-        notes_book[number_note - 1].add_teg(teg_text)
-        print(f"\nТег: {teg_text} було добавлено до нотатки №: {number_note}")
+        notes_book[number_note - 1].add_teg(args[0])
+        return f"\nТег: {args[0]} було добавлено до нотатки №: {number_note}"
     if (number_note > len(notes_book)) or (number_note <= 0):
-        print(f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток.")
-
-
-def bot_change_teg(teg_text, number_note):  # Записує тег teg_text замість існуючих тегів до нотатки № number_note
-    try:  #  з перевіркою номера нотатки. Не потребуе декоратора помилок.
-        int(number_note)
-    except ValueError:
-        return print("\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки.")
-    if (number_note <= len(notes_book)) and (number_note > 0):
-        notes_book[number_note - 1].change_teg(teg_text)
-        print(f"\nТег нотатки №: {number_note} було замінено тегом {teg_text}.")
-    if (number_note > len(notes_book)) or (number_note <= 0):
-        print(f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток.")
-
-
-def bot_add_text_note(note_text, number_note):  # Додає текст note_text до нотатки № number_note
-    try:  # з перевіркою номера нотатки. Не потребуе декоратора помилок.
-        int(number_note)
-    except ValueError:
-        return print("\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки.")
-    if (number_note <= len(notes_book)) and (number_note > 0):
-        notes_book[number_note - 1].add_text_note(note_text)
-        print(f"\nТекст: {note_text} було добавлено до тексту нотатки №: {number_note}")
-    if (number_note > len(notes_book)) or (number_note <= 0):
-        print(f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток.")
-
-
-def bot_change_text_note(note_text, number_note):  # Записує текст note_text до нотатки № number_note  але видаляє попередній, тобто змінює.
-    try:  # з перевіркою номера нотатки. Не потребуе декоратора помилок.
-        int(number_note)
-    except ValueError:
-        return print("\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки.")
-    if (number_note <= len(notes_book)) and (number_note > 0):
-        notes_book[number_note - 1].change_text_note(note_text)
-        print(f"\nТекст нотатки №: {number_note} було замінено текстом: {note_text}.")
-    if (number_note > len(notes_book)) or (number_note <= 0):
-        print(f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток.")
-
+        return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
 
 
 @input_error
-def make_note(name, note=None, teg=None):
-    if note is not None and teg is not None:
-        raise MaxArgumentError("Приймає максимум 3 аргументи: name, note та teg.")
-        
-    notatca = Note(name, note, teg)
-    notes_book.add_note(notatca)
- 
+def bot_change_teg(*args):  # Записує тег teg_text замість існуючих тегів до нотатки № number_note
+    if len(args) != 2:
+        raise ValueNeedEnterError("Teg name and Note number")
     
+    try:  #  з перевіркою номера нотатки. Не потребуе декоратора помилок.
+        number_note = int(args[1])
+    except ValueError:
+        return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
+    if (number_note <= len(notes_book)) and (number_note > 0):
+        notes_book[number_note - 1].change_teg(args[0])
+        return f"\nТег нотатки №: {number_note} було замінено тегом {args[0]}."
+    if (number_note > len(notes_book)) or (number_note <= 0):
+        return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
+
+
+@input_error
+def bot_add_text_note(*args):  # Додає текст note_text до нотатки № number_note
+    if len(args) != 2:
+        raise ValueNeedEnterError("Note text and Note number")
+    
+    try:  # з перевіркою номера нотатки. Не потребуе декоратора помилок.
+        number_note = int(args[1])
+    except ValueError:
+        return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
+    if (number_note <= len(notes_book)) and (number_note > 0):
+        notes_book[number_note - 1].add_text_note(args[0])
+        return f"\nТекст: {args[0]} було добавлено до тексту нотатки №: {number_note}"
+    if (number_note > len(notes_book)) or (number_note <= 0):
+        return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
+
+
+@input_error
+def bot_change_text_note(*args):  # Записує текст note_text до нотатки № number_note  але видаляє попередній, тобто змінює.
+    if len(args) != 2:
+        raise ValueNeedEnterError("Note text and Note number")
+    
+    try:  # з перевіркою номера нотатки. Не потребуе декоратора помилок.
+        number_note = int(args[1])
+    except ValueError:
+        return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
+    if (number_note <= len(notes_book)) and (number_note > 0):
+        notes_book[number_note - 1].change_text_note(args[0])
+        return f"\nТекст нотатки №: {number_note} було замінено текстом: {args[0]}."
+    if (number_note > len(notes_book)) or (number_note <= 0):
+        return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
+
+
+@input_error 
+def make_note(*args): # Робить нову нотатку та додає у кінець списка. Поля не обов'язкові.
+    if not len(args):
+        raise ValueNeedEnterError("Name")
+    
+    args_max_quantity = 3
+    if len(args) > args_max_quantity:
+        raise TooMuchArgumentsError(args_max_quantity)
+  
+    name = args[0]
+    note = ""
+    teg = ""
+    if len(args) > 1:
+        note = args[1]
+    if len(args) > 2:
+        teg = args[2]
+
+    notatca = Note(name, note, teg)
+    notes_book.add_note(notatca)    
 
 def show_notes(n_str=None):
     try:  #  з перевіркою номера нотатки. Не потребуе декоратора помилок.
@@ -244,7 +266,7 @@ def show_notes(n_str=None):
     else:
         n_str = int(
             n_str
-        )  # Показуе або усі або по декілька нотаток на один раз. Не потребує декоратора помилок.
+        )  # Показує або усі або по декілька нотаток на один раз. Не потребує декоратора помилок.
         if n_str > 0:  # Використовуе функцію  print_one_page(n_str)
             long = len(notes_book)
             if long <= n_str:
@@ -290,19 +312,11 @@ def delete_note_by_number(number_note):
 def search_notes(query):
     query = query.lower()
 
-    # пошук по імені, опису та тегу
-    matching_notes = []
-    for note in notes_book:
-        if query in note.name.lower() or (note.note and query in note.note.lower()) or any(query in tag.lower() for tag in note.tegs):
-            matching_notes.append(note)
+    if not query:
+        print("Потрібно ввести аргумент для пошуку.")
+        return
 
-    if matching_notes:
-        print(f"Знайдено {len(matching_notes)} нотаток, що відповідають запиту '{query}':")
-        for idx, note in enumerate(matching_notes, start=1):
-            print(f"{idx}. {note}")
-    else:
-        print(f"Нотатки за запитом '{query}' не знайдено.")
-
+    notes_book.search_by_global(query)
 
 
 ######   Загрузка та збереження. #############################################################################################
