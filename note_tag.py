@@ -303,7 +303,7 @@ def delete_note_by_number(number_note):
     except ValueError:
         return print("\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки.")
     
-    if (number_note <= len(notes_book)) and (number_note > 0):
+    if (int(number_note) <= len(notes_book)) and (int(number_note) > 0):
         notes_book.delete_note(number_note)
     else:
         print(f"\nНотатка №: {number_note} не існує. У Вас всього {len(notes_book)} нотаток.")
