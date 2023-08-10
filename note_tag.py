@@ -183,6 +183,7 @@ def bot_add_teg(*args):  # Додає тег teg_text до нотатки № nu
         return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
     if (number_note <= len(notes_book)) and (number_note > 0):
         notes_book[number_note - 1].add_teg(args[0])
+        save_note_book()
         return f"\nТег: {args[0]} було добавлено до нотатки №: {number_note}"
     if (number_note > len(notes_book)) or (number_note <= 0):
         return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
@@ -199,6 +200,7 @@ def bot_change_teg(*args):  # Записує тег teg_text замість іс
         return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
     if (number_note <= len(notes_book)) and (number_note > 0):
         notes_book[number_note - 1].change_teg(args[0])
+        save_note_book()
         return f"\nТег нотатки №: {number_note} було замінено тегом {args[0]}."
     if (number_note > len(notes_book)) or (number_note <= 0):
         return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
@@ -215,6 +217,7 @@ def bot_add_text_note(*args):  # Додає текст note_text до нотат
         return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
     if (number_note <= len(notes_book)) and (number_note > 0):
         notes_book[number_note - 1].add_text_note(args[0])
+        save_note_book()
         return f"\nТекст: {args[0]} було добавлено до тексту нотатки №: {number_note}"
     if (number_note > len(notes_book)) or (number_note <= 0):
         return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
@@ -231,6 +234,7 @@ def bot_change_text_note(*args):  # Записує текст note_text до н�
         return "\nБуло введено не розпізнане число. Введіть будь ласка вірний номер нотатки."
     if (number_note <= len(notes_book)) and (number_note > 0):
         notes_book[number_note - 1].change_text_note(args[0])
+        save_note_book()
         return f"\nТекст нотатки №: {number_note} було замінено текстом: {args[0]}."
     if (number_note > len(notes_book)) or (number_note <= 0):
         return f"\nНотатка №: {number_note} не існуе. У Вас всього {len(notes_book)} нотаток."
@@ -254,7 +258,8 @@ def make_note(*args): # Робить нову нотатку та додає у 
         teg = args[2]
 
     notatca = Note(name, note, teg)
-    notes_book.add_note(notatca)    
+    notes_book.add_note(notatca)
+    save_note_book()    
 
 def show_notes(n_str=None):
     try:  #  з перевіркою номера нотатки. Не потребуе декоратора помилок.
@@ -305,6 +310,7 @@ def delete_note_by_number(number_note):
     
     if (int(number_note) <= len(notes_book)) and (int(number_note) > 0):
         notes_book.delete_note(number_note)
+        save_note_book()
     else:
         print(f"\nНотатка №: {number_note} не існує. У Вас всього {len(notes_book)} нотаток.")
 
