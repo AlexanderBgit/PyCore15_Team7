@@ -6,6 +6,8 @@ from classes import *
 from note_tag import *
 import difflib
 
+# for package install
+VERSION = "0.9.0"
 
 COMMANDS = {
     add_command: ("add", "+", "2","adding","append"),
@@ -23,8 +25,14 @@ COMMANDS = {
     contacts_in_period: ("period", "bdays","congrats"),
     help_command: ("help"),
     show_notes: ("show-notes", "n5"),
-    make_note: ("make-notes", "add-notes", "+n")
-    
+    make_note: ("make-notes", "add-notes", "+n"),
+    bot_add_teg: ("add-tag","+t"),
+    bot_change_teg: ("change-tag","=t"),
+    bot_add_text_note: ("add-text"),
+    bot_change_text_note: ("change-text","=text"),
+    delete_note_by_number: ("delete-note","-n"),
+    search_notes: ("search-n","search-notes","search-tag","fnt")
+        
 }
 
 def get_closest_matches(user_input, commands, n=3, cutoff=0.6):
@@ -75,6 +83,8 @@ def unknown_command(text):
     return f"Unknown command: '{text}'. Type 'help' to see the list of available commands."
 
 def main():
+    print('Hello. I am your contact-assistant.\nWhat can I do for you?')
+    
     while True:
         user_input = input("enter your choices--->>> ")
 
@@ -101,6 +111,5 @@ def main():
  
 
 if __name__ == "__main__":
-    print('Hello. I am your contact-assistant.\nWhat can I do for you?')
     bot = Bot()
     main()
